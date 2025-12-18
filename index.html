@@ -5,100 +5,91 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Regalo Especial</title>
 
-<!-- Fuente bonita "Great Vibes" desde Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
 
 <style>
-    body {
-        font-family: 'Great Vibes', cursive;
-        text-align: center;
-        margin: 0;
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        background: linear-gradient(135deg, #6ee7b7, #c4b5fd);
-        transition: background 1s ease;
-        overflow: hidden;
-        padding: 50px 20px;
-        cursor: url('https://iili.io/fM3xGQn.png'), pointer;
-    }
+body {
+    font-family: 'Great Vibes', cursive;
+    text-align: center;
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #6ee7b7, #c4b5fd);
+    transition: background 1s ease;
+    overflow: hidden;
+    padding: 50px 20px;
+    cursor: url('https://iili.io/fM3xGQn.png'), pointer;
+}
 
-    h1, h2 {
-        margin: 0;
-    }
+h1,h2 { margin:0; }
 
-    h1 {
-        color: #7e22ce;
-        font-size: 4rem;
-        margin-bottom: 10px;
-    }
+h1 {
+    color:#7e22ce;
+    font-size:4rem;
+    margin-bottom:10px;
+}
 
-    h2 {
-        color: #9d4edd;
-        font-size: 2.5rem;
-        margin-top: 10px;
-        margin-bottom: 40px;
-    }
+h2 {
+    color:#9d4edd;
+    font-size:2.5rem;
+    margin-top:10px;
+    margin-bottom:40px;
+}
 
-    .imagen {
-        max-width: 80%;
-        height: auto;
-        border-radius: 20px;
-        cursor: url('https://iili.io/fM3xMKh.gif'), pointer;
-        opacity: 0;
-        transform: translateY(50px) rotate(-5deg);
-        transition: all 0.8s ease;
-        position: relative;
-        box-shadow: 0 6px 20px rgba(0,0,0,0.4);
-    }
+.imagen {
+    max-width:80%;
+    height:auto;
+    border-radius:20px;
+    cursor:url('https://iili.io/fM3xMKh.gif'), pointer;
+    opacity:0;
+    transform:translateY(50px) rotate(-5deg);
+    transition: all 0.8s ease;
+    position: relative;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+}
 
-    .visible {
-        opacity: 1;
-        transform: translateY(0) rotate(0deg);
-    }
+.visible {
+    opacity:1;
+    transform:translateY(0) rotate(0deg);
+}
 
-    .brillo {
-        animation: brillar 2s infinite alternate;
-    }
+.brillo { animation: brillar 2s infinite alternate; }
 
-    @keyframes brillar {
-        0% { box-shadow: 0 6px 20px rgba(0,0,0,0.4), 0 0 20px rgba(255,255,255,0.3); }
-        50% { box-shadow: 0 6px 20px rgba(0,0,0,0.4), 0 0 35px rgba(255,255,255,0.6); }
-        100% { box-shadow: 0 6px 20px rgba(0,0,0,0.4), 0 0 20px rgba(255,255,255,0.3); }
-    }
+@keyframes brillar {
+    0% { box-shadow:0 6px 20px rgba(0,0,0,0.4),0 0 20px rgba(255,255,255,0.3); }
+    50% { box-shadow:0 6px 20px rgba(0,0,0,0.4),0 0 35px rgba(255,255,255,0.6); }
+    100% { box-shadow:0 6px 20px rgba(0,0,0,0.4),0 0 20px rgba(255,255,255,0.3); }
+}
 
-    #mensajeSuperior, #mensajeInferior {
-        font-size: 3.5rem;
-        color: #6b21a8;
-        margin: 20px 0;
-        max-width: 90%;
-        line-height: 1.4;
-        white-space: pre-wrap;
-    }
+#mensajeSuperior,#mensajeInferior {
+    font-size:3.5rem;
+    color:#6b21a8;
+    margin:20px 0;
+    max-width:90%;
+    line-height:1.4;
+    white-space:pre-wrap;
+}
 
-    #mensajeSuperior span, #mensajeInferior span {
-        opacity: 0;
-        transition: opacity 0.05s linear;
-    }
+#mensajeSuperior span,#mensajeInferior span { opacity:0; transition:opacity 0.05s linear; }
 
-    /* Confeti animado */
-    .confetti {
-        position: fixed;
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        top: -10px;
-        left: 50%;
-        opacity: 0.8;
-        animation: caer 4s linear forwards;
-    }
+.confetti {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    top: -10px;
+    left: 50%;
+    opacity:0.8;
+    animation: caer 4s linear forwards;
+}
 
-    @keyframes caer {
-        0% { transform: translateY(0) rotate(0deg); }
-        100% { transform: translateY(100vh) rotate(360deg); }
-    }
+@keyframes caer {
+    0% { transform:translateY(0) rotate(0deg);}
+    100% { transform:translateY(100vh) rotate(360deg);}
+}
 </style>
 </head>
 <body>
@@ -131,77 +122,74 @@ const imagenes = [
 let paso = 0;
 let mensajeParte = 0;
 
-// Mensajes a escribir letra por letra
 const textoSuperior = "Hay cosas sencillas que nacen con buenas intenciones, este regalo es una de ellas.\nGracias por compartir tu tiempo.";
 const textoInferior = "Atentamente: Koranyx 💚";
 
-// Función para animación de escritura
-function escribirTexto(elemento, texto, callback){
-    elemento.innerHTML = '';
-    for(let i=0; i<texto.length; i++){
-        const span = document.createElement('span');
-        span.textContent = texto[i];
+function escribirTexto(elemento,texto,callback){
+    elemento.innerHTML='';
+    for(let i=0;i<texto.length;i++){
+        const span=document.createElement('span');
+        span.textContent=texto[i];
         elemento.appendChild(span);
     }
-    let index = 0;
-    const spans = elemento.querySelectorAll('span');
-    const intervalo = setInterval(() => {
-        spans[index].style.opacity = 1;
+    let index=0;
+    const spans=elemento.querySelectorAll('span');
+    const intervalo=setInterval(()=>{
+        spans[index].style.opacity=1;
         index++;
-        if(index >= spans.length){
+        if(index>=spans.length){
             clearInterval(intervalo);
             if(callback) callback();
         }
-    }, 50);
+    },50);
 }
 
 function mostrarImagen(paso) {
     imagenActual.classList.remove('visible');
-    setTimeout(() => {
-        imagenActual.src = imagenes[paso];
+    setTimeout(()=>{
+        imagenActual.src=imagenes[paso];
         imagenActual.classList.add('visible');
-
-        if(paso === 1){
-            titulo.style.display = 'none';
-            subtitulo.style.display = 'none';
+        if(paso===1){
+            titulo.style.display='none';
+            subtitulo.style.display='none';
             imagenActual.classList.remove('brillo');
         }
-    }, 500);
+        // Si es la última imagen, mostrar automáticamente la parte superior del mensaje
+        if(paso === imagenes.length -1 && mensajeParte===0){
+            escribirTexto(mensajeSuperior,textoSuperior,crearConfeti);
+            mensajeParte=1;
+        }
+    },500);
 }
 
-function crearConfeti() {
-    for (let i = 0; i < 50; i++) {
-        const confetti = document.createElement('div');
+function crearConfeti(){
+    for(let i=0;i<50;i++){
+        const confetti=document.createElement('div');
         confetti.classList.add('confetti');
-        confetti.style.left = Math.random() * window.innerWidth + 'px';
-        confetti.style.backgroundColor = `hsl(${Math.random()*360}, 70%, 80%)`;
-        confetti.style.animationDuration = 3 + Math.random()*2 + 's';
-        confetti.style.width = 5 + Math.random()*10 + 'px';
-        confetti.style.height = confetti.style.width;
+        confetti.style.left=Math.random()*window.innerWidth+'px';
+        confetti.style.backgroundColor=`hsl(${Math.random()*360},70%,80%)`;
+        confetti.style.animationDuration=3+Math.random()*2+'s';
+        confetti.style.width=5+Math.random()*10+'px';
+        confetti.style.height=confetti.style.width;
         document.body.appendChild(confetti);
-        setTimeout(() => { confetti.remove(); }, 4000);
+        setTimeout(()=>{ confetti.remove(); },4000);
     }
 }
 
-window.onload = () => {
-    setTimeout(() => {
+window.onload=()=>{
+    setTimeout(()=>{
         imagenActual.classList.add('visible');
         campanita.play();
-    }, 200);
+    },200);
 };
 
-imagenActual.addEventListener('click', () => {
-    if(paso < imagenes.length){
+imagenActual.addEventListener('click',()=>{
+    if(paso<imagenes.length-1){
         paso++;
         mostrarImagen(paso);
-    } else {
-        if(mensajeParte === 0){
-            escribirTexto(mensajeSuperior, textoSuperior, crearConfeti);
-            mensajeParte++;
-        } else if(mensajeParte === 1){
-            escribirTexto(mensajeInferior, textoInferior);
-            mensajeParte++;
-        }
+    } else if(mensajeParte===1){
+        escribirTexto(mensajeInferior,textoInferior);
+        mensajeParte=2;
     }
 });
 </script>
