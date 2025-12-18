@@ -1,115 +1,98 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Regalo Especial</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #fff8f0;
-            text-align: center;
-            padding: 50px 20px;
-            overflow-x: hidden;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Regalo Especial</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        padding: 50px 20px;
+        margin: 0;
+        min-height: 100vh;
+        /* Fondo degradado morado pastel */
+        background: linear-gradient(135deg, #d8b4ff, #c4b5fd, #e0c3fc);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
 
-        h1 {
-            color: #d14a00;
-            margin-bottom: 40px;
-        }
+    h1 {
+        color: #7e22ce;
+        font-size: 2.5rem;
+        margin-bottom: 40px;
+    }
 
-        /* Estilo del regalo */
-        #regalo {
-            max-width: 300px;
-            height: auto;
-            border-radius: 15px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            cursor: pointer;
-            transition: transform 0.5s;
-        }
+    .imagen {
+        max-width: 80%;
+        height: auto;
+        border-radius: 20px;
+        box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+        cursor: pointer;
+        opacity: 1;
+        transition: all 0.8s ease;
+    }
 
-        #regalo:hover {
-            transform: scale(1.05) rotate(3deg);
-        }
+    .hidden {
+        opacity: 0;
+        transform: scale(0.8);
+    }
 
-        /* Animación de “abrir regalo” */
-        .abrir {
-            animation: abrirRegalo 1s forwards;
-        }
-
-        @keyframes abrirRegalo {
-            0% { transform: scale(1) rotate(0deg); }
-            50% { transform: scale(1.2) rotate(-15deg); }
-            100% { transform: scale(1) rotate(0deg); }
-        }
-
-        /* Imágenes ocultas con animación */
-        .imagen {
-            max-width: 90%;
-            height: auto;
-            margin: 20px 0;
-            border-radius: 15px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease;
-        }
-
-        .visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Mensaje final */
-        #mensajeFinal {
-            font-size: 22px;
-            color: #333;
-            margin-top: 30px;
-            opacity: 0;
-            transition: opacity 1s ease;
-        }
-    </style>
+    #mensajeFinal {
+        font-size: 2rem;
+        color: #6b21a8;
+        margin-top: 40px;
+        opacity: 0;
+        transition: opacity 1s ease;
+        max-width: 90%;
+        line-height: 1.4;
+    }
+</style>
 </head>
 <body>
 
-    <h1>Un regalo muy especial 🎁</h1>
+<h1>Un regalo muy especial 🎁</h1>
 
-    <!-- Imagen del regalo -->
-    <img id="regalo" src="https://iili.io/flwD46u.jpg" alt="Koranyx dando el regalo">
+<!-- Imagen inicial -->
+<img id="imagenActual" src="https://iili.io/flwD46u.jpg" alt="Koranyx dando el regalo" class="imagen">
 
-    <!-- Imágenes ocultas -->
-    <div id="imagenesOcultas">
-        <img src="https://iili.io/flN2GwJ.jpg" alt="Nana" class="imagen">
-        <img src="https://iili.io/flN3MJ9.jpg" alt="Hachi" class="imagen">
-    </div>
+<!-- Mensaje final -->
+<p id="mensajeFinal">Hay cosas sencillas que nacen con buenas intenciones, este regalo es una de ellas.<br>Gracias por compartir tu tiempo.</p>
 
-    <!-- Mensaje final -->
-    <p id="mensajeFinal">Hay cosas sencillas que nacen con buenas intenciones, este regalo es una de ellas.<br>Gracias por compartir tu tiempo.</p>
+<script>
+const imagenActual = document.getElementById('imagenActual');
+const mensajeFinal = document.getElementById('mensajeFinal');
 
-    <script>
-        const regalo = document.getElementById('regalo');
-        const imagenes = document.querySelectorAll('#imagenesOcultas .imagen');
-        const mensajeFinal = document.getElementById('mensajeFinal');
+// Lista de imágenes en orden
+const imagenes = [
+    "https://iili.io/flwD46u.jpg", // Koranyx
+    "https://iili.io/flN2GwJ.jpg", // Nana
+    "https://iili.io/flN3MJ9.jpg"  // Hachi
+];
 
-        regalo.addEventListener('click', () => {
-            // Animación de abrir regalo
-            regalo.classList.add('abrir');
+let paso = 0; // Contador de clicks
 
-            // Mostrar imágenes después de la animación (1s)
-            setTimeout(() => {
-                imagenes.forEach((img, index) => {
-                    setTimeout(() => {
-                        img.classList.add('visible');
-                    }, 300 * index);
-                });
-            }, 1000);
+imagenActual.addEventListener('click', () => {
+    paso++;
 
-            // Mostrar mensaje final después de las imágenes
-            setTimeout(() => {
-                mensajeFinal.style.opacity = '1';
-            }, 1000 + 300 * imagenes.length + 500);
-        });
-    </script>
+    if(paso <= imagenes.length - 1) {
+        // Animación de desaparición
+        imagenActual.classList.add('hidden');
+
+        setTimeout(() => {
+            // Cambiar imagen
+            imagenActual.src = imagenes[paso];
+            // Animación de aparición
+            imagenActual.classList.remove('hidden');
+        }, 500); // medio segundo de transición
+    } else {
+        // Mostrar mensaje final después del último click
+        mensajeFinal.style.opacity = '1';
+    }
+});
+</script>
 
 </body>
 </html>
