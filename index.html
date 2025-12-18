@@ -10,10 +10,14 @@
             background-color: #fff8f0;
             text-align: center;
             padding: 50px 20px;
+            overflow-x: hidden;
         }
+
         h1 {
             color: #d14a00;
+            margin-bottom: 40px;
         }
+
         .imagen {
             max-width: 90%;
             height: auto;
@@ -23,17 +27,28 @@
             cursor: pointer;
             transition: transform 0.3s;
         }
+
         .imagen:hover {
             transform: scale(1.05);
         }
+
+        .hidden {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         #mensajeFinal {
             font-size: 22px;
             color: #333;
             margin-top: 30px;
-            display: none;
-        }
-        .hidden {
-            display: none;
+            opacity: 0;
+            transition: opacity 1s ease;
         }
     </style>
 </head>
@@ -43,34 +58,3 @@
 
     <!-- Imagen inicial del regalo -->
     <img id="regalo" src="https://iili.io/flwD46u.jpg" alt="Koranyx dando el regalo" class="imagen">
-
-    <!-- Imágenes que aparecen al hacer click -->
-    <div id="imagenesOcultas" class="hidden">
-        <img src="https://iili.io/flN2GwJ.jpg" alt="Nana" class="imagen">
-        <img src="https://iili.io/flN3MJ9.jpg" alt="Hachi" class="imagen">
-    </div>
-
-    <!-- Mensaje final -->
-    <p id="mensajeFinal">Hay cosas sencillas que nacen con buenas intenciones, este regalo es una de ellas.<br>Gracias por compartir tu tiempo.</p>
-
-    <script>
-        const regalo = document.getElementById('regalo');
-        const imagenesOcultas = document.getElementById('imagenesOcultas');
-        const mensajeFinal = document.getElementById('mensajeFinal');
-
-        regalo.addEventListener('click', () => {
-            // Mostrar las imágenes ocultas
-            imagenesOcultas.classList.remove('hidden');
-
-            // Ocultar el regalo inicial si quieres
-            // regalo.style.display = 'none';
-
-            // Mostrar el mensaje final con un pequeño retraso
-            setTimeout(() => {
-                mensajeFinal.style.display = 'block';
-            }, 500); // medio segundo después
-        });
-    </script>
-
-</body>
-</html>
