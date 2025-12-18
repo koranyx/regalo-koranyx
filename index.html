@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Un pequeño regalo</title>
+  <style>
+    body {
+      margin: 0;
+      background: #0f0c14;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: 'Georgia', serif;
+      color: #e6dff1;
+      overflow: hidden;
+    }
+
+    .container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    .image {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      transition: opacity 1.2s ease;
+    }
+
+    .image.show {
+      opacity: 1;
+    }
+
+    .image img {
+      max-height: 90vh;
+      max-width: 90vw;
+    }
+
+    /* Click area on the gift */
+    .click-zone {
+      position: absolute;
+      width: 140px;
+      height: 140px;
+      cursor: pointer;
+      /* DEBUG: background: rgba(255,0,0,0.3); */
+    }
+
+    .hint {
+      position: absolute;
+      top: 30px;
+      width: 100%;
+      text-align: center;
+      font-size: 14px;
+      opacity: 0.7;
+      letter-spacing: 1px;
+    }
+
+    .message {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 40px;
+      opacity: 0;
+      transition: opacity 1.8s ease;
+      background: rgba(15,12,20,0.75);
+      line-height: 1.8;
+      font-size: 20px;
+    }
+
+    .message.show {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- START IMAGE: Koranyx giving the gift -->
+  <div class="image show" id="start">
+    <img src="koranyx_regalo.png" alt="Koranyx entregando el regalo" />
+
+    <div class="click-zone" id="giftClick" style="left: 50%; top: 55%; transform: translate(-50%, -50%);"></div>
+    <div class="hint">Haz click en el regalo</div>
+  </div>
+
+  <!-- NANA Illustration 1 -->
+  <div class="image" id="img1">
+    <img src="nana_1.png" alt="Ilustración Nana 1" />
+  </div>
+
+  <!-- NANA Illustration 2 -->
+  <div class="image" id="img2">
+    <img src="nana_2.png" alt="Ilustración Nana 2" />
+  </div>
+
+  <!-- FINAL MESSAGE -->
+  <div class="message" id="finalMessage">
+    <div>
+      Hay cosas sencillas<br>
+      que nacen con buenas intenciones.<br>
+      Este regalo es una de ellas.<br>
+      Gracias por compartir tu espacio. 💜<br><br>
+      — Koranyx
+    </div>
+  </div>
+
+</div>
+
+<script>
+  const gift = document.getElementById('giftClick');
+  const start = document.getElementById('start');
+  const img1 = document.getElementById('img1');
+  const img2 = document.getElementById('img2');
+  const message = document.getElementById('finalMessage');
+
+  gift.addEventListener('click', () => {
+    start.classList.remove('show');
+
+    setTimeout(() => img1.classList.add('show'), 800);
+    setTimeout(() => img2.classList.add('show'), 2200);
+    setTimeout(() => message.classList.add('show'), 4200);
+  });
+</script>
+
+</body>
+</html>
+
