@@ -5,12 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Regalo Especial</title>
 
-<!-- Fuente bonita desde Google Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<!-- Fuente bonita "Great Vibes" desde Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
 
 <style>
+    /* Fuente y estilos generales */
     body {
-        font-family: 'Poppins', sans-serif;
+        font-family: 'Great Vibes', cursive;
         text-align: center;
         margin: 0;
         min-height: 100vh;
@@ -22,6 +23,7 @@
         transition: background 1s ease;
         overflow: hidden;
         padding: 50px 20px;
+        cursor: url('https://iili.io/fM3xGQn.png'), pointer; /* cursor general: manita mágica */
     }
 
     h1, h2 {
@@ -30,13 +32,13 @@
 
     h1 {
         color: #7e22ce;
-        font-size: 3rem;
+        font-size: 4rem;
         margin-bottom: 10px;
     }
 
     h2 {
         color: #9d4edd;
-        font-size: 2rem;
+        font-size: 2.5rem;
         margin-top: 10px;
         margin-bottom: 40px;
     }
@@ -45,7 +47,7 @@
         max-width: 80%;
         height: auto;
         border-radius: 20px;
-        cursor: pointer;
+        cursor: url('https://iili.io/fM3xMKh.gif'), pointer; /* cursor sobre la imagen: animado */
         opacity: 0;
         transform: translateY(50px) rotate(-5deg);
         transition: all 0.8s ease;
@@ -136,23 +138,17 @@ const imagenes = [
 let paso = 0; // contador de clicks
 
 function mostrarImagen(paso) {
-    // animación de salida
     imagenActual.classList.remove('visible');
-    
     setTimeout(() => {
-        // cambiar imagen
         imagenActual.src = imagenes[paso];
-        // animación de entrada
         imagenActual.classList.add('visible');
 
-        // Ocultar título y subtítulo después del primer click
         if(paso === 1){
             titulo.style.display = 'none';
             subtitulo.style.display = 'none';
-            // quitar brillo del gif inicial
             imagenActual.classList.remove('brillo');
         }
-    }, 500); // medio segundo
+    }, 500);
 }
 
 function crearConfeti() {
@@ -165,14 +161,11 @@ function crearConfeti() {
         confetti.style.width = 5 + Math.random()*10 + 'px';
         confetti.style.height = confetti.style.width;
         document.body.appendChild(confetti);
-
-        setTimeout(() => {
-            confetti.remove();
-        }, 4000);
+        setTimeout(() => { confetti.remove(); }, 4000);
     }
 }
 
-// Reproducir campanita al cargar la primera imagen
+// Animación inicial y sonido campanita
 window.onload = () => {
     setTimeout(() => {
         imagenActual.classList.add('visible');
@@ -185,7 +178,6 @@ imagenActual.addEventListener('click', () => {
     if(paso < imagenes.length) {
         mostrarImagen(paso);
     } else {
-        // último click muestra mensaje final y confeti
         mensajeFinal.classList.add('visible');
         crearConfeti();
     }
