@@ -1,116 +1,76 @@
-<!DOCTYPE html><html lang="es">
+<!DOCTYPE html>
+<html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <title>Un pequeño regalo</title>
-  <style>
-    body {
-      margin: 0;
-      background: #0f0c14;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      font-family: 'Georgia', serif;
-      color: #e6dff1;
-      overflow: hidden;
-    }.container {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
-
-.image {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  opacity: 0;
-  transition: opacity 1.2s ease;
-}
-
-.image.show {
-  opacity: 1;
-}
-
-.image img {
-  max-height: 90vh;
-  max-width: 90vw;
-}
-
-/* Click area on the gift */
-.click-zone {
-  position: absolute;
-  width: 140px;
-  height: 140px;
-  cursor: pointer;
-  /* DEBUG: background: rgba(255,0,0,0.3); */
-}
-
-.hint {
-  position: absolute;
-  top: 30px;
-  width: 100%;
-  text-align: center;
-  font-size: 14px;
-  opacity: 0.7;
-  letter-spacing: 1px;
-}
-
-.message {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 40px;
-  opacity: 0;
-  transition: opacity 1.8s ease;
-  background: rgba(15,12,20,0.75);
-  line-height: 1.8;
-  font-size: 20px;
-}
-
-.message.show {
-  opacity: 1;
-}
-
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Regalo Especial</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff8f0;
+            text-align: center;
+            padding: 50px 20px;
+        }
+        h1 {
+            color: #d14a00;
+        }
+        .imagen {
+            max-width: 90%;
+            height: auto;
+            margin: 20px 0;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .imagen:hover {
+            transform: scale(1.05);
+        }
+        #mensajeFinal {
+            font-size: 22px;
+            color: #333;
+            margin-top: 30px;
+            display: none;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
 </head>
-<body><div class="container">  <!-- START IMAGE: Koranyx giving the gift -->  <div class="image show" id="start">
-    <img src="<a href="https://ibb.co/21rKR6YH"><img src="https://iili.io/flwD46u.jpg" alt="303-sin-t-tulo-1" border="0"></a>" alt="Koranyx entregando el regalo" /><div class="click-zone" id="giftClick" style="left: 50%; top: 55%; transform: translate(-50%, -50%);"></div>
-<div class="hint">Haz click en el regalo</div>
+<body>
 
-  </div>  <!-- NANA Illustration 1 -->  <div class="image" id="img1">
-    <img src="https://i.ibb.co/x8wC3Zsw/304-sin-t-tulo-1.jpg" alt="Ilustración Nana 1" />
-  </div>  <!-- NANA Illustration 2 -->  <div class="image" id="img2">
-    <img src="https://i.ibb.co/0VvF0fkL/305-sin-t-tulo.jpg" alt="Ilustración Nana 2" />
-  </div>  <!-- FINAL MESSAGE -->  <div class="message" id="finalMessage">
-    <div>
-      Hay cosas sencillas<br>
-      que nacen con buenas intenciones.<br>
-      Este regalo es una de ellas.<br>
-      Gracias por compartir tu espacio. 💜<br><br>
-      — Koranyx
+    <h1>Un regalo muy especial 🎁</h1>
+
+    <!-- Imagen inicial del regalo -->
+    <img id="regalo" src="https://iili.io/flwD46u.jpg" alt="Koranyx dando el regalo" class="imagen">
+
+    <!-- Imágenes que aparecen al hacer click -->
+    <div id="imagenesOcultas" class="hidden">
+        <img src="https://iili.io/flN2GwJ.jpg" alt="Nana" class="imagen">
+        <img src="https://iili.io/flN3MJ9.jpg" alt="Hachi" class="imagen">
     </div>
-  </div></div><script>
-  const gift = document.getElementById('giftClick');
-  const start = document.getElementById('start');
-  const img1 = document.getElementById('img1');
-  const img2 = document.getElementById('img2');
-  const message = document.getElementById('finalMessage');
 
-  gift.addEventListener('click', () => {
-    start.classList.remove('show');
-    setTimeout(() => img1.classList.add('show'), 800);
-    setTimeout(() => img2.classList.add('show'), 2200);
-    setTimeout(() => message.classList.add('show'), 4200);
-  });
+    <!-- Mensaje final -->
+    <p id="mensajeFinal">Hay cosas sencillas que nacen con buenas intenciones, este regalo es una de ellas.<br>Gracias por compartir tu tiempo.</p>
 
-    setTimeout(() => img1.classList.add('show'), 800);
-    setTimeout(() => img2.classList.add('show'), 2200);
-    setTimeout(() => message.classList.add('show'), 4200);
-  });
-</script></body>
+    <script>
+        const regalo = document.getElementById('regalo');
+        const imagenesOcultas = document.getElementById('imagenesOcultas');
+        const mensajeFinal = document.getElementById('mensajeFinal');
+
+        regalo.addEventListener('click', () => {
+            // Mostrar las imágenes ocultas
+            imagenesOcultas.classList.remove('hidden');
+
+            // Ocultar el regalo inicial si quieres
+            // regalo.style.display = 'none';
+
+            // Mostrar el mensaje final con un pequeño retraso
+            setTimeout(() => {
+                mensajeFinal.style.display = 'block';
+            }, 500); // medio segundo después
+        });
+    </script>
+
+</body>
 </html>
