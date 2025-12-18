@@ -8,7 +8,6 @@
     body {
         font-family: Arial, sans-serif;
         text-align: center;
-        padding: 50px 20px;
         margin: 0;
         min-height: 100vh;
         display: flex;
@@ -18,11 +17,23 @@
         background: linear-gradient(135deg, #d8b4ff, #c4b5fd, #e0c3fc);
         transition: background 1s ease;
         overflow: hidden;
+        padding: 50px 20px;
+    }
+
+    h1, h2 {
+        margin: 0;
     }
 
     h1 {
         color: #7e22ce;
         font-size: 3rem;
+        margin-bottom: 10px;
+    }
+
+    h2 {
+        color: #9d4edd;
+        font-size: 2rem;
+        margin-top: 10px;
         margin-bottom: 40px;
     }
 
@@ -35,6 +46,7 @@
         opacity: 0;
         transform: translateY(50px) rotate(-5deg);
         transition: all 0.8s ease;
+        position: relative;
     }
 
     .visible {
@@ -42,8 +54,19 @@
         transform: translateY(0) rotate(0deg);
     }
 
+    /* Brillo animado del regalo inicial */
+    .brillo {
+        animation: brillar 2s infinite alternate;
+    }
+
+    @keyframes brillar {
+        0% { box-shadow: 0 6px 20px rgba(0,0,0,0.4), 0 0 20px rgba(255,255,255,0.3); }
+        50% { box-shadow: 0 6px 20px rgba(0,0,0,0.4), 0 0 35px rgba(255,255,255,0.6); }
+        100% { box-shadow: 0 6px 20px rgba(0,0,0,0.4), 0 0 20px rgba(255,255,255,0.3); }
+    }
+
     #mensajeFinal {
-        font-size: 3.5rem; /* Texto más grande */
+        font-size: 3rem;
         color: #6b21a8;
         margin-top: 50px;
         opacity: 0;
@@ -58,16 +81,15 @@
         transform: translateY(0);
     }
 
-    /* Estilo confeti */
+    /* Confeti animado */
     .confetti {
         position: fixed;
         width: 10px;
         height: 10px;
-        background-color: #f0a5ff;
+        border-radius: 50%;
         top: -10px;
         left: 50%;
         opacity: 0.8;
-        border-radius: 50%;
         animation: caer 4s linear forwards;
     }
 
@@ -79,20 +101,25 @@
 </head>
 <body>
 
-<h1>Un regalo muy especial para mi amiga secreta 🎁</h1>
+<!-- Texto y subtítulo para la primera imagen -->
+<h1 id="titulo">Un regalo muy especial 🎁</h1>
+<h2 id="subtitulo">Para mi amiga secreta</h2>
 
-<!-- Imagen inicial -->
-<img id="imagenActual" src="https://iili.io/flwD46u.jpg" alt="Koranyx dando el regalo" class="imagen">
+<!-- Imagen inicial (gif del regalo animado) -->
+<img id="imagenActual" src="https://em-content.zobj.net/source/animated-noto-color-emoji/427/wrapped-gift_1f381.gif" alt="Regalo animado" class="imagen brillo">
 
 <!-- Mensaje final -->
-<p id="mensajeFinal">Hay cosas sencillas que nacen con buenas intenciones, este regalo es una de ellas.<br>Gracias por compartir tu tiempo. Att: Koranyx 💚</p>
+<p id="mensajeFinal">Hay cosas sencillas que nacen con buenas intenciones, este regalo es una de ellas.<br>Gracias por compartir tu tiempo.<br>Atentamente: Koranyx 💚</p>
 
 <script>
 const imagenActual = document.getElementById('imagenActual');
 const mensajeFinal = document.getElementById('mensajeFinal');
+const titulo = document.getElementById('titulo');
+const subtitulo = document.getElementById('subtitulo');
 
-// Lista de imágenes en orden
+// Lista de imágenes en orden (primera es el regalo animado)
 const imagenes = [
+    "https://em-content.zobj.net/source/animated-noto-color-emoji/427/wrapped-gift_1f381.gif", // Regalo animado
     "https://iili.io/flwD46u.jpg", // Koranyx
     "https://iili.io/flN2GwJ.jpg", // Nana
     "https://iili.io/flN3MJ9.jpg"  // Hachi
@@ -100,6 +127,7 @@ const imagenes = [
 
 // Fondos correspondientes a cada imagen (contain para verse completo)
 const fondos = [
+    "linear-gradient(135deg, #d8b4ff, #c4b5fd, #e0c3fc)", // fondo inicial
     "url('https://iili.io/flO2q0B.png') center/contain no-repeat",
     "url('https://i.pinimg.com/564x/cc/e0/22/cce0225aae8bea2684ecb81442c54d18.jpg') center/contain no-repeat",
     "url('https://i.pinimg.com/564x/7f/89/14/7f89149b4218b33ff876239291c1babf.jpg') center/contain no-repeat"
@@ -116,8 +144,17 @@ function mostrarImagen(paso) {
         imagenActual.src = imagenes[paso];
         // cambiar fondo del body
         document.body.style.background = fondos[paso];
-        // animación de entrada
+
+        // Animación de entrada
         imagenActual.classList.add('visible');
+
+        // Ocultar título y subtítulo después del primer click
+        if(paso === 1){
+            titulo.style.display = 'none';
+            subtitulo.style.display = 'none';
+            // quitar brillo del gif inicial
+            imagenActual.classList.remove('brillo');
+        }
     }, 500); // medio segundo
 }
 
