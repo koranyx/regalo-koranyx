@@ -9,7 +9,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
 
 <style>
-    /* Fuente y estilos generales */
     body {
         font-family: 'Great Vibes', cursive;
         text-align: center;
@@ -19,7 +18,7 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        background: linear-gradient(135deg, #6ee7b7, #c4b5fd); /* Verde turquesa y morado pastel */
+        background: linear-gradient(135deg, #6ee7b7, #c4b5fd);
         transition: background 1s ease;
         overflow: hidden;
         padding: 50px 20px;
@@ -71,10 +70,26 @@
         100% { box-shadow: 0 6px 20px rgba(0,0,0,0.4), 0 0 20px rgba(255,255,255,0.3); }
     }
 
-    #mensajeFinal {
-        font-size: 3rem;
+    #mensajeSuperior {
+        font-size: 3.5rem;
         color: #6b21a8;
-        margin-top: 50px;
+        margin-bottom: 40px;
+        opacity: 0;
+        transition: opacity 1s ease, transform 1s ease;
+        max-width: 90%;
+        line-height: 1.4;
+        transform: translateY(-50px);
+    }
+
+    #mensajeSuperior.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    #mensajeInferior {
+        font-size: 3rem;
+        color: #7e22ce;
+        margin-top: 40px;
         opacity: 0;
         transition: opacity 1s ease, transform 1s ease;
         max-width: 90%;
@@ -82,7 +97,7 @@
         transform: translateY(50px);
     }
 
-    #mensajeFinal.visible {
+    #mensajeInferior.visible {
         opacity: 1;
         transform: translateY(0);
     }
@@ -107,22 +122,21 @@
 </head>
 <body>
 
-<!-- Sonido de campanita -->
 <audio id="campanita" src="https://www.soundjay.com/buttons/sounds/button-3.mp3"></audio>
 
-<!-- Texto y subtítulo para la primera imagen -->
 <h1 id="titulo">Un regalo muy especial 🎁</h1>
 <h2 id="subtitulo">Para mi amiga secreta</h2>
 
-<!-- Imagen inicial (gif del regalo animado) -->
 <img id="imagenActual" src="https://em-content.zobj.net/source/animated-noto-color-emoji/427/wrapped-gift_1f381.gif" alt="Regalo animado" class="imagen brillo">
 
-<!-- Mensaje final -->
-<p id="mensajeFinal">Hay cosas sencillas que nacen con buenas intenciones, este regalo es una de ellas.<br>Gracias por compartir tu tiempo.<br>Atentamente: Koranyx 💚</p>
+<!-- Mensajes finales -->
+<p id="mensajeSuperior">Hay cosas sencillas que nacen con buenas intenciones, este regalo es una de ellas.<br>Gracias por compartir tu tiempo.</p>
+<p id="mensajeInferior">Atentamente: Koranyx 💚</p>
 
 <script>
 const imagenActual = document.getElementById('imagenActual');
-const mensajeFinal = document.getElementById('mensajeFinal');
+const mensajeSuperior = document.getElementById('mensajeSuperior');
+const mensajeInferior = document.getElementById('mensajeInferior');
 const titulo = document.getElementById('titulo');
 const subtitulo = document.getElementById('subtitulo');
 const campanita = document.getElementById('campanita');
@@ -136,6 +150,7 @@ const imagenes = [
 ];
 
 let paso = 0; // contador de clicks
+let mensajeParte = 0; // control de partes del mensaje final
 
 function mostrarImagen(paso) {
     imagenActual.classList.remove('visible');
@@ -174,12 +189,18 @@ window.onload = () => {
 };
 
 imagenActual.addEventListener('click', () => {
-    paso++;
-    if(paso < imagenes.length) {
+    if(paso < imagenes.length){
+        paso++;
         mostrarImagen(paso);
     } else {
-        mensajeFinal.classList.add('visible');
-        crearConfeti();
+        if(mensajeParte === 0){
+            mensajeSuperior.classList.add('visible'); // Mostrar la parte superior
+            crearConfeti();
+            mensajeParte++;
+        } else if(mensajeParte === 1){
+            mensajeInferior.classList.add('visible'); // Mostrar la parte inferior
+            mensajeParte++;
+        }
     }
 });
 </script>
