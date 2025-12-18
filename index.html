@@ -64,16 +64,23 @@ h2 {
     100% { box-shadow:0 6px 20px rgba(0,0,0,0.4),0 0 20px rgba(255,255,255,0.3); }
 }
 
-#mensajeSuperior,#mensajeInferior {
+#mensajeSuperior {
     font-size:3.5rem;
     color:#6b21a8;
-    margin:20px 0;
+    margin-bottom:20px;
     max-width:90%;
     line-height:1.4;
-    white-space:pre-wrap;
+    display:none;
 }
 
-#mensajeSuperior span,#mensajeInferior span { opacity:0; transition:opacity 0.05s linear; }
+#mensajeInferior {
+    font-size:3rem;
+    color:#7e22ce;
+    margin-top:20px;
+    max-width:90%;
+    line-height:1.4;
+    display:none;
+}
 
 .confetti {
     position: fixed;
@@ -101,8 +108,8 @@ h2 {
 
 <img id="imagenActual" src="https://em-content.zobj.net/source/animated-noto-color-emoji/427/wrapped-gift_1f381.gif" alt="Regalo animado" class="imagen brillo">
 
-<p id="mensajeSuperior"></p>
-<p id="mensajeInferior"></p>
+<p id="mensajeSuperior">Hay cosas sencillas que nacen con buenas intenciones, este regalo es una de ellas.<br>Gracias por compartir tu tiempo.</p>
+<p id="mensajeInferior">Atentamente: Koranyx 💚</p>
 
 <script>
 const imagenActual = document.getElementById('imagenActual');
@@ -122,41 +129,22 @@ const imagenes = [
 let paso = 0;
 let mensajeParte = 0;
 
-const textoSuperior = "Hay cosas sencillas que nacen con buenas intenciones, este regalo es una de ellas.\nGracias por compartir tu tiempo.";
-const textoInferior = "Atentamente: Koranyx 💚";
-
-function escribirTexto(elemento,texto,callback){
-    elemento.innerHTML='';
-    for(let i=0;i<texto.length;i++){
-        const span=document.createElement('span');
-        span.textContent=texto[i];
-        elemento.appendChild(span);
-    }
-    let index=0;
-    const spans=elemento.querySelectorAll('span');
-    const intervalo=setInterval(()=>{
-        spans[index].style.opacity=1;
-        index++;
-        if(index>=spans.length){
-            clearInterval(intervalo);
-            if(callback) callback();
-        }
-    },50);
-}
-
 function mostrarImagen(paso) {
     imagenActual.classList.remove('visible');
     setTimeout(()=>{
-        imagenActual.src=imagenes[paso];
+        imagenActual.src = imagenes[paso];
         imagenActual.classList.add('visible');
+
         if(paso===1){
             titulo.style.display='none';
             subtitulo.style.display='none';
             imagenActual.classList.remove('brillo');
         }
-        // Si es la última imagen, mostrar automáticamente la parte superior del mensaje
-        if(paso === imagenes.length -1 && mensajeParte===0){
-            escribirTexto(mensajeSuperior,textoSuperior,crearConfeti);
+
+        // Si es la última imagen, mostrar el mensaje superior automáticamente
+        if(paso === imagenes.length-1 && mensajeParte===0){
+            mensajeSuperior.style.display='block';
+            crearConfeti();
             mensajeParte=1;
         }
     },500);
@@ -188,7 +176,7 @@ imagenActual.addEventListener('click',()=>{
         paso++;
         mostrarImagen(paso);
     } else if(mensajeParte===1){
-        escribirTexto(mensajeInferior,textoInferior);
+        mensajeInferior.style.display='block';
         mensajeParte=2;
     }
 });
