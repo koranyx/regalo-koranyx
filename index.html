@@ -15,9 +15,9 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        /* Fondo degradado morado pastel general */
         background: linear-gradient(135deg, #d8b4ff, #c4b5fd, #e0c3fc);
         transition: background 1s ease;
+        overflow: hidden;
     }
 
     h1 {
@@ -43,7 +43,7 @@
     }
 
     #mensajeFinal {
-        font-size: 3rem; /* más grande */
+        font-size: 3.5rem; /* Texto más grande */
         color: #6b21a8;
         margin-top: 50px;
         opacity: 0;
@@ -56,6 +56,24 @@
     #mensajeFinal.visible {
         opacity: 1;
         transform: translateY(0);
+    }
+
+    /* Estilo confeti */
+    .confetti {
+        position: fixed;
+        width: 10px;
+        height: 10px;
+        background-color: #f0a5ff;
+        top: -10px;
+        left: 50%;
+        opacity: 0.8;
+        border-radius: 50%;
+        animation: caer 4s linear forwards;
+    }
+
+    @keyframes caer {
+        0% { transform: translateY(0) rotate(0deg); }
+        100% { transform: translateY(100vh) rotate(360deg); }
     }
 </style>
 </head>
@@ -80,11 +98,11 @@ const imagenes = [
     "https://iili.io/flN3MJ9.jpg"  // Hachi
 ];
 
-// Fondos correspondientes a cada imagen
+// Fondos correspondientes a cada imagen (contain para verse completo)
 const fondos = [
-    "url('https://iili.io/flO2q0B.png') center/cover no-repeat",
-    "url('https://i.pinimg.com/564x/cc/e0/22/cce0225aae8bea2684ecb81442c54d18.jpg') center/cover no-repeat",
-    "url('https://i.pinimg.com/564x/7f/89/14/7f89149b4218b33ff876239291c1babf.jpg') center/cover no-repeat"
+    "url('https://iili.io/flO2q0B.png') center/contain no-repeat",
+    "url('https://i.pinimg.com/564x/cc/e0/22/cce0225aae8bea2684ecb81442c54d18.jpg') center/contain no-repeat",
+    "url('https://i.pinimg.com/564x/7f/89/14/7f89149b4218b33ff876239291c1babf.jpg') center/contain no-repeat"
 ];
 
 let paso = 0; // contador de clicks
@@ -103,13 +121,31 @@ function mostrarImagen(paso) {
     }, 500); // medio segundo
 }
 
+function crearConfeti() {
+    for (let i = 0; i < 50; i++) {
+        const confetti = document.createElement('div');
+        confetti.classList.add('confetti');
+        confetti.style.left = Math.random() * window.innerWidth + 'px';
+        confetti.style.backgroundColor = `hsl(${Math.random()*360}, 70%, 80%)`;
+        confetti.style.animationDuration = 3 + Math.random()*2 + 's';
+        confetti.style.width = 5 + Math.random()*10 + 'px';
+        confetti.style.height = confetti.style.width;
+        document.body.appendChild(confetti);
+
+        setTimeout(() => {
+            confetti.remove();
+        }, 4000);
+    }
+}
+
 imagenActual.addEventListener('click', () => {
     paso++;
     if(paso < imagenes.length) {
         mostrarImagen(paso);
     } else {
-        // último click muestra mensaje final
+        // último click muestra mensaje final y confeti
         mensajeFinal.classList.add('visible');
+        crearConfeti();
     }
 });
 
