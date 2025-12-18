@@ -22,7 +22,7 @@
         transition: background 1s ease;
         overflow: hidden;
         padding: 50px 20px;
-        cursor: url('https://iili.io/fM3xGQn.png'), pointer; /* cursor general: manita mágica */
+        cursor: url('https://iili.io/fM3xGQn.png'), pointer;
     }
 
     h1, h2 {
@@ -46,7 +46,7 @@
         max-width: 80%;
         height: auto;
         border-radius: 20px;
-        cursor: url('https://iili.io/fM3xMKh.gif'), pointer; /* cursor sobre la imagen: animado */
+        cursor: url('https://iili.io/fM3xMKh.gif'), pointer;
         opacity: 0;
         transform: translateY(50px) rotate(-5deg);
         transition: all 0.8s ease;
@@ -59,7 +59,6 @@
         transform: translateY(0) rotate(0deg);
     }
 
-    /* Brillo animado del regalo inicial */
     .brillo {
         animation: brillar 2s infinite alternate;
     }
@@ -70,36 +69,18 @@
         100% { box-shadow: 0 6px 20px rgba(0,0,0,0.4), 0 0 20px rgba(255,255,255,0.3); }
     }
 
-    #mensajeSuperior {
+    #mensajeSuperior, #mensajeInferior {
         font-size: 3.5rem;
         color: #6b21a8;
-        margin-bottom: 40px;
-        opacity: 0;
-        transition: opacity 1s ease, transform 1s ease;
+        margin: 20px 0;
         max-width: 90%;
         line-height: 1.4;
-        transform: translateY(-50px);
+        white-space: pre-wrap;
     }
 
-    #mensajeSuperior.visible {
-        opacity: 1;
-        transform: translateY(0);
-    }
-
-    #mensajeInferior {
-        font-size: 3rem;
-        color: #7e22ce;
-        margin-top: 40px;
+    #mensajeSuperior span, #mensajeInferior span {
         opacity: 0;
-        transition: opacity 1s ease, transform 1s ease;
-        max-width: 90%;
-        line-height: 1.4;
-        transform: translateY(50px);
-    }
-
-    #mensajeInferior.visible {
-        opacity: 1;
-        transform: translateY(0);
+        transition: opacity 0.05s linear;
     }
 
     /* Confeti animado */
@@ -129,9 +110,8 @@
 
 <img id="imagenActual" src="https://em-content.zobj.net/source/animated-noto-color-emoji/427/wrapped-gift_1f381.gif" alt="Regalo animado" class="imagen brillo">
 
-<!-- Mensajes finales -->
-<p id="mensajeSuperior">Hay cosas sencillas que nacen con buenas intenciones, este regalo es una de ellas.<br>Gracias por compartir tu tiempo.</p>
-<p id="mensajeInferior">Atentamente: Koranyx 💚</p>
+<p id="mensajeSuperior"></p>
+<p id="mensajeInferior"></p>
 
 <script>
 const imagenActual = document.getElementById('imagenActual');
@@ -141,16 +121,39 @@ const titulo = document.getElementById('titulo');
 const subtitulo = document.getElementById('subtitulo');
 const campanita = document.getElementById('campanita');
 
-// Lista de imágenes en orden (primera es el regalo animado)
 const imagenes = [
-    "https://em-content.zobj.net/source/animated-noto-color-emoji/427/wrapped-gift_1f381.gif", // Regalo animado
-    "https://iili.io/flwD46u.jpg", // Koranyx
-    "https://iili.io/flN2GwJ.jpg", // Nana
-    "https://iili.io/flN3MJ9.jpg"  // Hachi
+    "https://em-content.zobj.net/source/animated-noto-color-emoji/427/wrapped-gift_1f381.gif",
+    "https://iili.io/flwD46u.jpg",
+    "https://iili.io/flN2GwJ.jpg",
+    "https://iili.io/flN3MJ9.jpg"
 ];
 
-let paso = 0; // contador de clicks
-let mensajeParte = 0; // control de partes del mensaje final
+let paso = 0;
+let mensajeParte = 0;
+
+// Mensajes a escribir letra por letra
+const textoSuperior = "Hay cosas sencillas que nacen con buenas intenciones, este regalo es una de ellas.\nGracias por compartir tu tiempo.";
+const textoInferior = "Atentamente: Koranyx 💚";
+
+// Función para animación de escritura
+function escribirTexto(elemento, texto, callback){
+    elemento.innerHTML = '';
+    for(let i=0; i<texto.length; i++){
+        const span = document.createElement('span');
+        span.textContent = texto[i];
+        elemento.appendChild(span);
+    }
+    let index = 0;
+    const spans = elemento.querySelectorAll('span');
+    const intervalo = setInterval(() => {
+        spans[index].style.opacity = 1;
+        index++;
+        if(index >= spans.length){
+            clearInterval(intervalo);
+            if(callback) callback();
+        }
+    }, 50);
+}
 
 function mostrarImagen(paso) {
     imagenActual.classList.remove('visible');
@@ -180,7 +183,6 @@ function crearConfeti() {
     }
 }
 
-// Animación inicial y sonido campanita
 window.onload = () => {
     setTimeout(() => {
         imagenActual.classList.add('visible');
@@ -194,11 +196,10 @@ imagenActual.addEventListener('click', () => {
         mostrarImagen(paso);
     } else {
         if(mensajeParte === 0){
-            mensajeSuperior.classList.add('visible'); // Mostrar la parte superior
-            crearConfeti();
+            escribirTexto(mensajeSuperior, textoSuperior, crearConfeti);
             mensajeParte++;
         } else if(mensajeParte === 1){
-            mensajeInferior.classList.add('visible'); // Mostrar la parte inferior
+            escribirTexto(mensajeInferior, textoInferior);
             mensajeParte++;
         }
     }
