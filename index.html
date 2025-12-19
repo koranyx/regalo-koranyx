@@ -5,54 +5,52 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Regalo Especial</title>
 
-<!-- Fuente bonita "Great Vibes" desde Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
 
 <style>
-    /* Fuente y estilos generales */
-    body {
-        font-family: 'Great Vibes', cursive;
-        text-align: center;
-        margin: 0;
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        background: linear-gradient(135deg, #6ee7b7, #c4b5fd); /* Verde turquesa y morado pastel */
-        transition: background 1s ease;
-        overflow: hidden;
-        padding: 50px 20px;
-        cursor: url('https://iili.io/fM3xGQn.png'), pointer; /* cursor general: manita mágica */
+    * {
+        box-sizing: border-box;
     }
 
-    h1, h2 {
+    body {
+        font-family: 'Great Vibes', cursive;
         margin: 0;
+        min-height: 100vh;
+        background: linear-gradient(135deg, #6ee7b7, #c4b5fd);
+        padding: 40px 20px;
+        cursor: url('https://iili.io/fM3xGQn.png'), pointer;
+    }
+
+    .contenedor {
+        max-width: 900px;
+        margin: auto;
+        text-align: center;
     }
 
     h1 {
         color: #7e22ce;
-        font-size: 4rem;
+        font-size: clamp(2.5rem, 5vw, 4rem);
         margin-bottom: 10px;
     }
 
     h2 {
         color: #9d4edd;
-        font-size: 2.5rem;
-        margin-top: 10px;
+        font-size: clamp(1.5rem, 4vw, 2.5rem);
         margin-bottom: 40px;
     }
 
     .imagen {
-        max-width: 80%;
+        max-width: 100%;
+        width: 420px;
         height: auto;
         border-radius: 20px;
-        cursor: url('https://iili.io/fM3xMKh.gif'), pointer; /* cursor sobre la imagen: animado */
+        cursor: url('https://iili.io/fM3xMKh.gif'), pointer;
         opacity: 0;
-        transform: translateY(50px) rotate(-5deg);
+        transform: translateY(40px) rotate(-5deg);
         transition: all 0.8s ease;
-        position: relative;
         box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+        margin: auto;
+        display: block;
     }
 
     .visible {
@@ -60,26 +58,26 @@
         transform: translateY(0) rotate(0deg);
     }
 
-    /* Brillo animado del regalo inicial */
     .brillo {
         animation: brillar 2s infinite alternate;
     }
 
     @keyframes brillar {
-        0% { box-shadow: 0 6px 20px rgba(0,0,0,0.4), 0 0 20px rgba(255,255,255,0.3); }
-        50% { box-shadow: 0 6px 20px rgba(0,0,0,0.4), 0 0 35px rgba(255,255,255,0.6); }
-        100% { box-shadow: 0 6px 20px rgba(0,0,0,0.4), 0 0 20px rgba(255,255,255,0.3); }
+        0% { box-shadow: 0 0 20px rgba(255,255,255,0.3); }
+        100% { box-shadow: 0 0 35px rgba(255,255,255,0.6); }
     }
 
     #mensajeFinal {
-        font-size: 3rem;
+        font-size: clamp(1.8rem, 4vw, 3rem);
         color: #6b21a8;
         margin-top: 50px;
         opacity: 0;
-        transition: opacity 1s ease, transform 1s ease;
-        max-width: 90%;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
         line-height: 1.4;
-        transform: translateY(50px);
+        transform: translateY(40px);
+        transition: all 1s ease;
     }
 
     #mensajeFinal.visible {
@@ -87,38 +85,48 @@
         transform: translateY(0);
     }
 
-    /* Confeti animado */
+    /* Confeti */
     .confetti {
         position: fixed;
         width: 10px;
         height: 10px;
         border-radius: 50%;
         top: -10px;
-        left: 50%;
-        opacity: 0.8;
         animation: caer 4s linear forwards;
     }
 
     @keyframes caer {
-        0% { transform: translateY(0) rotate(0deg); }
-        100% { transform: translateY(100vh) rotate(360deg); }
+        to { transform: translateY(110vh) rotate(360deg); }
+    }
+
+    /* AJUSTES EXTRA PARA PC GRANDE */
+    @media (min-width: 1024px) {
+        .imagen {
+            width: 500px;
+        }
     }
 </style>
 </head>
+
 <body>
 
-<!-- Sonido de campanita -->
 <audio id="campanita" src="https://www.soundjay.com/buttons/sounds/button-3.mp3"></audio>
 
-<!-- Texto y subtítulo para la primera imagen -->
-<h1 id="titulo">Un regalo muy especial 🎁</h1>
-<h2 id="subtitulo">Para mi amiga secreta</h2>
+<div class="contenedor">
+    <h1 id="titulo">Un regalo muy especial 🎁</h1>
+    <h2 id="subtitulo">Para mi amiga secreta</h2>
 
-<!-- Imagen inicial (gif del regalo animado) -->
-<img id="imagenActual" src="https://em-content.zobj.net/source/animated-noto-color-emoji/427/wrapped-gift_1f381.gif" alt="Regalo animado" class="imagen brillo">
+    <img id="imagenActual"
+         src="https://em-content.zobj.net/source/animated-noto-color-emoji/427/wrapped-gift_1f381.gif"
+         class="imagen brillo"
+         alt="Regalo animado">
 
-<!-- Mensaje final -->
-<p id="mensajeFinal">Hay cosas sencillas que nacen con buenas intenciones, este regalo es una de ellas.<br>Gracias por compartir tu tiempo.<br>Atentamente: Koranyx 💚</p>
+    <p id="mensajeFinal">
+        Hay cosas sencillas que nacen con buenas intenciones, este regalo es una de ellas.<br>
+        Gracias por compartir tu tiempo.<br>
+        Atentamente: Koranyx 💚
+    </p>
+</div>
 
 <script>
 const imagenActual = document.getElementById('imagenActual');
@@ -127,45 +135,41 @@ const titulo = document.getElementById('titulo');
 const subtitulo = document.getElementById('subtitulo');
 const campanita = document.getElementById('campanita');
 
-// Lista de imágenes en orden (primera es el regalo animado)
 const imagenes = [
-    "https://em-content.zobj.net/source/animated-noto-color-emoji/427/wrapped-gift_1f381.gif", // Regalo animado
-    "https://iili.io/flwD46u.jpg", // Koranyx
-    "https://iili.io/flN2GwJ.jpg", // Nana
-    "https://iili.io/flN3MJ9.jpg"  // Hachi
+    "https://em-content.zobj.net/source/animated-noto-color-emoji/427/wrapped-gift_1f381.gif",
+    "https://iili.io/flwD46u.jpg",
+    "https://iili.io/flN2GwJ.jpg",
+    "https://iili.io/flN3MJ9.jpg"
 ];
 
-let paso = 0; // contador de clicks
+let paso = 0;
 
-function mostrarImagen(paso) {
+function mostrarImagen(p) {
     imagenActual.classList.remove('visible');
     setTimeout(() => {
-        imagenActual.src = imagenes[paso];
+        imagenActual.src = imagenes[p];
         imagenActual.classList.add('visible');
 
-        if(paso === 1){
+        if (p === 1) {
             titulo.style.display = 'none';
             subtitulo.style.display = 'none';
             imagenActual.classList.remove('brillo');
         }
-    }, 500);
+    }, 400);
 }
 
 function crearConfeti() {
     for (let i = 0; i < 50; i++) {
-        const confetti = document.createElement('div');
-        confetti.classList.add('confetti');
-        confetti.style.left = Math.random() * window.innerWidth + 'px';
-        confetti.style.backgroundColor = `hsl(${Math.random()*360}, 70%, 80%)`;
-        confetti.style.animationDuration = 3 + Math.random()*2 + 's';
-        confetti.style.width = 5 + Math.random()*10 + 'px';
-        confetti.style.height = confetti.style.width;
-        document.body.appendChild(confetti);
-        setTimeout(() => { confetti.remove(); }, 4000);
+        const c = document.createElement('div');
+        c.className = 'confetti';
+        c.style.left = Math.random() * window.innerWidth + 'px';
+        c.style.backgroundColor = `hsl(${Math.random()*360},70%,80%)`;
+        c.style.animationDuration = 3 + Math.random() * 2 + 's';
+        document.body.appendChild(c);
+        setTimeout(() => c.remove(), 4000);
     }
 }
 
-// Animación inicial y sonido campanita
 window.onload = () => {
     setTimeout(() => {
         imagenActual.classList.add('visible');
@@ -175,7 +179,7 @@ window.onload = () => {
 
 imagenActual.addEventListener('click', () => {
     paso++;
-    if(paso < imagenes.length) {
+    if (paso < imagenes.length) {
         mostrarImagen(paso);
     } else {
         mensajeFinal.classList.add('visible');
