@@ -16,7 +16,19 @@ body {
     min-height: 100vh;
     background: linear-gradient(135deg, #6ee7b7, #c4b5fd);
     padding: 40px 20px;
-    cursor: url('https://iili.io/fM3xGQn.png'), pointer;
+}
+
+/* ===== CURSORES TEMÁTICOS ===== */
+.cursor-estrella {
+    cursor: url('https://cur.cursors-4u.net/others/oth-1/oth36.cur'), auto;
+}
+
+.cursor-pua {
+    cursor: url('https://cur.cursors-4u.net/music/mus-1/mus42.cur'), auto;
+}
+
+.cursor-fresa {
+    cursor: url('https://cur.cursors-4u.net/food/foo-6/foo606.cur'), auto;
 }
 
 .contenedor {
@@ -47,6 +59,7 @@ h2 {
     box-shadow: 0 6px 20px rgba(0,0,0,0.4);
     margin: auto;
     display: block;
+    cursor: pointer;
 }
 
 .visible {
@@ -139,6 +152,23 @@ const imagenes = [
 let paso = 0;
 let musicaIniciada = false;
 
+/* 🎭 Cursor narrativo */
+function actualizarCursor() {
+    document.body.classList.remove(
+        'cursor-estrella',
+        'cursor-pua',
+        'cursor-fresa'
+    );
+
+    if (paso <= 1) {
+        document.body.classList.add('cursor-estrella');
+    } else if (paso === 2) {
+        document.body.classList.add('cursor-pua');
+    } else {
+        document.body.classList.add('cursor-fresa');
+    }
+}
+
 function mostrarImagen(p) {
     imagenActual.classList.remove('visible');
     setTimeout(() => {
@@ -167,22 +197,19 @@ function crearConfeti() {
 window.onload = () => {
     setTimeout(() => {
         imagenActual.classList.add('visible');
+        actualizarCursor();
     }, 200);
 };
 
 imagenActual.addEventListener('click', () => {
 
     paso++;
+    actualizarCursor();
 
-    /* 🎶 Inicia música YouTube SOLO una vez */
     if (!musicaIniciada) {
         ytplayer.src =
             "https://www.youtube.com/embed/pP7AQhRYZkE" +
-            "?autoplay=1" +
-            "&loop=1" +
-            "&playlist=pP7AQhRYZkE" +
-            "&controls=0" +
-            "&modestbranding=1";
+            "?autoplay=1&loop=1&playlist=pP7AQhRYZkE&controls=0&modestbranding=1";
         musicaIniciada = true;
     }
 
