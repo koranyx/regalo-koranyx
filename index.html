@@ -5,112 +5,114 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Regalo Especial</title>
 
+<!-- Fuente -->
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
 
 <style>
-    * {
-        box-sizing: border-box;
-    }
+* {
+    box-sizing: border-box;
+}
 
-    body {
-        font-family: 'Great Vibes', cursive;
-        margin: 0;
-        min-height: 100vh;
-        background: linear-gradient(135deg, #6ee7b7, #c4b5fd);
-        padding: 40px 20px;
-        cursor: url('https://iili.io/fM3xGQn.png'), pointer;
-    }
+body {
+    font-family: 'Great Vibes', cursive;
+    margin: 0;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #6ee7b7, #c4b5fd);
+    padding: 40px 20px;
+    cursor: url('https://iili.io/fM3xGQn.png'), pointer;
+}
 
-    .contenedor {
-        max-width: 900px;
-        margin: auto;
-        text-align: center;
-    }
+.contenedor {
+    max-width: 900px;
+    margin: auto;
+    text-align: center;
+}
 
-    h1 {
-        color: #7e22ce;
-        font-size: clamp(2.5rem, 5vw, 4rem);
-        margin-bottom: 10px;
-    }
+h1 {
+    color: #7e22ce;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    margin-bottom: 10px;
+}
 
-    h2 {
-        color: #9d4edd;
-        font-size: clamp(1.5rem, 4vw, 2.5rem);
-        margin-bottom: 40px;
-    }
+h2 {
+    color: #9d4edd;
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    margin-bottom: 40px;
+}
 
+.imagen {
+    max-width: 100%;
+    width: 420px;
+    height: auto;
+    border-radius: 20px;
+    cursor: url('https://iili.io/fM3xMKh.gif'), pointer;
+    opacity: 0;
+    transform: translateY(40px) rotate(-5deg);
+    transition: all 0.8s ease;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+    margin: auto;
+    display: block;
+}
+
+.visible {
+    opacity: 1;
+    transform: translateY(0) rotate(0deg);
+}
+
+.brillo {
+    animation: brillar 2s infinite alternate;
+}
+
+@keyframes brillar {
+    0% { box-shadow: 0 0 20px rgba(255,255,255,0.3); }
+    100% { box-shadow: 0 0 35px rgba(255,255,255,0.6); }
+}
+
+#mensajeFinal {
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    color: #6b21a8;
+    margin-top: 50px;
+    opacity: 0;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.4;
+    transform: translateY(40px);
+    transition: all 1s ease;
+}
+
+#mensajeFinal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Confeti */
+.confetti {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    top: -10px;
+    animation: caer 4s linear forwards;
+}
+
+@keyframes caer {
+    to { transform: translateY(110vh) rotate(360deg); }
+}
+
+@media (min-width: 1024px) {
     .imagen {
-        max-width: 100%;
-        width: 420px;
-        height: auto;
-        border-radius: 20px;
-        cursor: url('https://iili.io/fM3xMKh.gif'), pointer;
-        opacity: 0;
-        transform: translateY(40px) rotate(-5deg);
-        transition: all 0.8s ease;
-        box-shadow: 0 6px 20px rgba(0,0,0,0.4);
-        margin: auto;
-        display: block;
+        width: 500px;
     }
-
-    .visible {
-        opacity: 1;
-        transform: translateY(0) rotate(0deg);
-    }
-
-    .brillo {
-        animation: brillar 2s infinite alternate;
-    }
-
-    @keyframes brillar {
-        0% { box-shadow: 0 0 20px rgba(255,255,255,0.3); }
-        100% { box-shadow: 0 0 35px rgba(255,255,255,0.6); }
-    }
-
-    #mensajeFinal {
-        font-size: clamp(1.8rem, 4vw, 3rem);
-        color: #6b21a8;
-        margin-top: 50px;
-        opacity: 0;
-        max-width: 800px;
-        margin-left: auto;
-        margin-right: auto;
-        line-height: 1.4;
-        transform: translateY(40px);
-        transition: all 1s ease;
-    }
-
-    #mensajeFinal.visible {
-        opacity: 1;
-        transform: translateY(0);
-    }
-
-    /* Confeti */
-    .confetti {
-        position: fixed;
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        top: -10px;
-        animation: caer 4s linear forwards;
-    }
-
-    @keyframes caer {
-        to { transform: translateY(110vh) rotate(360deg); }
-    }
-
-    /* AJUSTES EXTRA PARA PC GRANDE */
-    @media (min-width: 1024px) {
-        .imagen {
-            width: 500px;
-        }
-    }
+}
 </style>
 </head>
 
 <body>
 
-<audio id="campanita" src="https://www.soundjay.com/buttons/sounds/button-3.mp3"></audio>
+<!-- Audio -->
+<audio id="campanita" preload="auto"
+       src="https://www.soundjay.com/buttons/sounds/button-3.mp3"></audio>
 
 <div class="contenedor">
     <h1 id="titulo">Un regalo muy especial 🎁</h1>
@@ -143,6 +145,7 @@ const imagenes = [
 ];
 
 let paso = 0;
+let sonidoReproducido = false;
 
 function mostrarImagen(p) {
     imagenActual.classList.remove('visible');
@@ -170,14 +173,22 @@ function crearConfeti() {
     }
 }
 
+/* Animación inicial SIN sonido */
 window.onload = () => {
     setTimeout(() => {
         imagenActual.classList.add('visible');
-        campanita.play();
     }, 200);
 };
 
+/* Click: sonido + cambio de imagen */
 imagenActual.addEventListener('click', () => {
+
+    if (!sonidoReproducido) {
+        campanita.currentTime = 0;
+        campanita.play().catch(() => {});
+        sonidoReproducido = true;
+    }
+
     paso++;
     if (paso < imagenes.length) {
         mostrarImagen(paso);
@@ -190,3 +201,4 @@ imagenActual.addEventListener('click', () => {
 
 </body>
 </html>
+
