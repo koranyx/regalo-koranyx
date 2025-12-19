@@ -5,13 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Regalo Especial</title>
 
-<!-- Fuente -->
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
 
 <style>
-* {
-    box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
     font-family: 'Great Vibes', cursive;
@@ -43,9 +40,7 @@ h2 {
 .imagen {
     max-width: 100%;
     width: 420px;
-    height: auto;
     border-radius: 20px;
-    cursor: url('https://iili.io/fM3xMKh.gif'), pointer;
     opacity: 0;
     transform: translateY(40px) rotate(-5deg);
     transition: all 0.8s ease;
@@ -64,8 +59,8 @@ h2 {
 }
 
 @keyframes brillar {
-    0% { box-shadow: 0 0 20px rgba(255,255,255,0.3); }
-    100% { box-shadow: 0 0 35px rgba(255,255,255,0.6); }
+    from { box-shadow: 0 0 20px rgba(255,255,255,0.3); }
+    to   { box-shadow: 0 0 35px rgba(255,255,255,0.6); }
 }
 
 #mensajeFinal {
@@ -73,10 +68,6 @@ h2 {
     color: #6b21a8;
     margin-top: 50px;
     opacity: 0;
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-    line-height: 1.4;
     transform: translateY(40px);
     transition: all 1s ease;
 }
@@ -99,20 +90,21 @@ h2 {
 @keyframes caer {
     to { transform: translateY(110vh) rotate(360deg); }
 }
-
-@media (min-width: 1024px) {
-    .imagen {
-        width: 500px;
-    }
-}
 </style>
 </head>
 
 <body>
 
-<!-- Audio -->
-<audio id="campanita" preload="auto"
-       src="https://www.soundjay.com/buttons/sounds/button-3.mp3"></audio>
+<!-- 🎶 YouTube oculto -->
+<iframe
+    id="ytplayer"
+    width="0"
+    height="0"
+    style="display:none"
+    src=""
+    frameborder="0"
+    allow="autoplay">
+</iframe>
 
 <div class="contenedor">
     <h1 id="titulo">Un regalo muy especial 🎁</h1>
@@ -135,7 +127,7 @@ const imagenActual = document.getElementById('imagenActual');
 const mensajeFinal = document.getElementById('mensajeFinal');
 const titulo = document.getElementById('titulo');
 const subtitulo = document.getElementById('subtitulo');
-const campanita = document.getElementById('campanita');
+const ytplayer = document.getElementById('ytplayer');
 
 const imagenes = [
     "https://em-content.zobj.net/source/animated-noto-color-emoji/427/wrapped-gift_1f381.gif",
@@ -145,7 +137,7 @@ const imagenes = [
 ];
 
 let paso = 0;
-let sonidoReproducido = false;
+let musicaIniciada = false;
 
 function mostrarImagen(p) {
     imagenActual.classList.remove('visible');
@@ -167,29 +159,33 @@ function crearConfeti() {
         c.className = 'confetti';
         c.style.left = Math.random() * window.innerWidth + 'px';
         c.style.backgroundColor = `hsl(${Math.random()*360},70%,80%)`;
-        c.style.animationDuration = 3 + Math.random() * 2 + 's';
         document.body.appendChild(c);
         setTimeout(() => c.remove(), 4000);
     }
 }
 
-/* Animación inicial SIN sonido */
 window.onload = () => {
     setTimeout(() => {
         imagenActual.classList.add('visible');
     }, 200);
 };
 
-/* Click: sonido + cambio de imagen */
 imagenActual.addEventListener('click', () => {
 
-    if (!sonidoReproducido) {
-        campanita.currentTime = 0;
-        campanita.play().catch(() => {});
-        sonidoReproducido = true;
+    paso++;
+
+    /* 🎶 Inicia música YouTube SOLO una vez */
+    if (!musicaIniciada) {
+        ytplayer.src =
+            "https://www.youtube.com/embed/pP7AQhRYZkE" +
+            "?autoplay=1" +
+            "&loop=1" +
+            "&playlist=pP7AQhRYZkE" +
+            "&controls=0" +
+            "&modestbranding=1";
+        musicaIniciada = true;
     }
 
-    paso++;
     if (paso < imagenes.length) {
         mostrarImagen(paso);
     } else {
@@ -201,4 +197,5 @@ imagenActual.addEventListener('click', () => {
 
 </body>
 </html>
+
 
